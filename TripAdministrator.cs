@@ -36,14 +36,10 @@ namespace TripAdministrations
         }
 
         public bool Exist(Company c)
-        {
-            throw new NotImplementedException();
-        }
+            => this.companies.Contains(c);
 
         public bool Exist(Trip t)
-        {
-            throw new NotImplementedException();
-        }
+            => this.trips.Contains(t);
 
         public void RemoveCompany(Company c)
         {
