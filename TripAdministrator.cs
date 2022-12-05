@@ -27,7 +27,12 @@ namespace TripAdministrations
 
         public void AddTrip(Company c, Trip t)
         {
-            throw new NotImplementedException();
+            if (!this.companies.Contains(c))
+            {
+                throw new ArgumentException();
+            }
+
+            c.Trips.Add(t);
         }
 
         public bool Exist(Company c)
