@@ -52,14 +52,10 @@ namespace TripAdministrations
         }
 
         public IEnumerable<Company> GetCompanies()
-        {
-            throw new NotImplementedException();
-        }
+            => this.companies;
 
         public IEnumerable<Trip> GetTrips()
-        {
-            throw new NotImplementedException();
-        }
+            => this.trips;
 
         public void ExecuteTrip(Company c, Trip t)
         {
