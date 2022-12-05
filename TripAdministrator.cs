@@ -76,9 +76,7 @@ namespace TripAdministrations
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
-        {
-            throw new NotImplementedException();
-        }
+            => this.companies.Where(c => c.Trips.Count > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
         {
