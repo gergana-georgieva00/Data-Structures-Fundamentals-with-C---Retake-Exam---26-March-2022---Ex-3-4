@@ -49,7 +49,12 @@ namespace TripAdministrations
                 throw new ArgumentException();
             }
 
+            var tripsToRemove = c.Trips;
             this.companies.Remove(c);
+            foreach (var trip in tripsToRemove)
+            {
+                trips.Remove(trip);
+            }
         }
 
         public IEnumerable<Company> GetCompanies()
@@ -74,13 +79,27 @@ namespace TripAdministrations
             }
 
             c.Trips.Remove(t);
+            trips.Remove(t);
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
             => this.companies.Where(c => c.Trips.Count > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
-            => this.trips.Where(t => t.Transportation.Equals(t));
+        {
+            if (t.HasFlag(Transportation.BUS))
+            {
+                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.BUS));
+            }
+            else if (t.HasFlag(Transportation.PLANE))
+            {
+                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.PLANE));
+            }
+            else
+            {
+                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.NONE));
+            }
+        }
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
             => this.trips.Where(t => t.Price >= lo && t.Price <= hi);
