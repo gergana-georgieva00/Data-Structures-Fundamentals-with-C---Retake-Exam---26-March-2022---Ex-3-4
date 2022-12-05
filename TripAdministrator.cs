@@ -8,11 +8,13 @@ namespace TripAdministrations
     {
         private List<Company> companies;
         private List<Trip> trips;
+        private Dictionary<Company, List<Trip>> companyTrips;
 
         public TripAdministrator()
         {
             this.companies = new List<Company>();
             this.trips = new List<Trip>();
+            companyTrips = new Dictionary<Company, List<Trip>>();
         }
 
         public void AddCompany(Company c)
@@ -23,6 +25,7 @@ namespace TripAdministrations
             }
 
             this.companies.Add(c);
+            this.companyTrips.Add(c, new List<Trip>());
         }
 
         public void AddTrip(Company c, Trip t)
@@ -32,8 +35,8 @@ namespace TripAdministrations
                 throw new ArgumentException();
             }
 
-            c.Trips.Add(t);
             this.trips.Add(t);
+            companyTrips[c].Add(t);
         }
 
         public bool Exist(Company c)
@@ -87,18 +90,7 @@ namespace TripAdministrations
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
         {
-            if (t.HasFlag(Transportation.BUS))
-            {
-                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.BUS));
-            }
-            else if (t.HasFlag(Transportation.PLANE))
-            {
-                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.PLANE));
-            }
-            else
-            {
-                return this.trips.Where(tr => tr.Transportation.HasFlag(Transportation.NONE));
-            }
+            return this.trips.Where(t => t.Transportation.CompareTo(t) == 0);
         }
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
