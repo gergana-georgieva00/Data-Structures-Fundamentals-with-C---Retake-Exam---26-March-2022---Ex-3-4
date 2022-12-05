@@ -9,17 +9,19 @@ namespace TripAdministrations
         private List<Company> companies;
         private List<Trip> trips;
         private Dictionary<Company, List<Trip>> companyTrips;
+        private Dictionary<Trip, Company> tripCompany;
 
         public TripAdministrator()
         {
             this.companies = new List<Company>();
             this.trips = new List<Trip>();
             companyTrips = new Dictionary<Company, List<Trip>>();
+            tripCompany = new Dictionary<Trip, Company>();
         }
 
         public void AddCompany(Company c)
         {
-            if (this.companies.Any(co => co.Name == c.Name))
+            if (this.companies.Contains(c))
             {
                 throw new ArgumentException();
             }
@@ -37,6 +39,8 @@ namespace TripAdministrations
 
             this.trips.Add(t);
             companyTrips[c].Add(t);
+            tripCompany.Add(t, c);
+            c.CurrentTrips++;
         }
 
         public bool Exist(Company c)
@@ -52,11 +56,13 @@ namespace TripAdministrations
                 throw new ArgumentException();
             }
 
-            var tripsToRemove = c.Trips;
+            var tripsToRemove = companyTrips[c];
+            this.companyTrips.Remove(c);
             this.companies.Remove(c);
             foreach (var trip in tripsToRemove)
             {
                 trips.Remove(trip);
+                tripCompany.Remove(trip);
             }
         }
 
@@ -76,17 +82,19 @@ namespace TripAdministrations
             {
                 throw new ArgumentException();
             }
-            if (!c.Trips.Contains(t))
+            if (!companyTrips[c].Contains(t))
             {
                 throw new ArgumentException();
             }
 
-            c.Trips.Remove(t);
+            companyTrips[c].Remove(t);
             trips.Remove(t);
+            tripCompany.Remove(t);
+            c.CurrentTrips--;
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
-            => this.companies.Where(c => c.Trips.Count > n);
+            => this.companies.Where(c => c.CurrentTrips > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
         {
