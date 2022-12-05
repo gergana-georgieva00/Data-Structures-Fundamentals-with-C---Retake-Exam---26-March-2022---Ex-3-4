@@ -59,7 +59,20 @@ namespace TripAdministrations
 
         public void ExecuteTrip(Company c, Trip t)
         {
-            throw new NotImplementedException();
+            if (!this.companies.Contains(c))
+            {
+                throw new ArgumentException();
+            }
+            if (!this.trips.Contains(t))
+            {
+                throw new ArgumentException();
+            }
+            if (!c.Trips.Contains(t))
+            {
+                throw new ArgumentException();
+            }
+
+            c.Trips.Remove(t);
         }
 
         public IEnumerable<Company> GetCompaniesWithMoreThatNTrips(int n)
