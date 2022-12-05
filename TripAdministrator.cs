@@ -82,8 +82,6 @@ namespace TripAdministrations
             => this.trips.Where(t => t.Transportation.Equals(t));
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
-        {
-            throw new NotImplementedException();
-        }
+            => this.trips.Where(t => t.Price >= lo && t.Price <= hi);
     }
 }
