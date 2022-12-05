@@ -79,9 +79,7 @@ namespace TripAdministrations
             => this.companies.Where(c => c.Trips.Count > n);
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
-        {
-            throw new NotImplementedException();
-        }
+            => this.trips.Where(t => t.Transportation.Equals(t));
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
         {
