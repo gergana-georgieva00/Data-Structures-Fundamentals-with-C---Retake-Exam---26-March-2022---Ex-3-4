@@ -33,6 +33,7 @@ namespace TripAdministrations
             }
 
             c.Trips.Add(t);
+            this.trips.Add(t);
         }
 
         public bool Exist(Company c)
