@@ -98,7 +98,7 @@ namespace TripAdministrations
 
         public IEnumerable<Trip> GetTripsWithTransportationType(Transportation t)
         {
-            return this.trips.Where(t => t.Transportation.CompareTo(t) == 0);
+            return this.trips.Where(x => x.Transportation == t);
         }
 
         public IEnumerable<Trip> GetAllTripsInPriceRange(int lo, int hi)
