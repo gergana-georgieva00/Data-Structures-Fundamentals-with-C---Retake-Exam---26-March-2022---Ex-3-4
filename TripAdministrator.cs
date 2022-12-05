@@ -43,7 +43,12 @@ namespace TripAdministrations
 
         public void RemoveCompany(Company c)
         {
-            throw new NotImplementedException();
+            if (!this.companies.Contains(c))
+            {
+                throw new ArgumentException();
+            }
+
+            this.companies.Remove(c);
         }
 
         public IEnumerable<Company> GetCompanies()
